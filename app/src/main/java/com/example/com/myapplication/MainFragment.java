@@ -29,15 +29,19 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.catGridView)
     GridView catGrid;
-    private AtomicInteger bitmapsToDownload;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_main, container, false);
         unbinder = ButterKnife.bind(this, view);
+        downloadAndShowCatImages();
+        return view;
+    }
+
+    private void downloadAndShowCatImages() {
         final Bitmap[] bitmaps = new Bitmap[NUM_CATS];
-        bitmapsToDownload = new AtomicInteger(NUM_CATS);
+        final AtomicInteger bitmapsToDownload = new AtomicInteger(NUM_CATS);
         for (int i = 0; i < NUM_CATS; i++) {
             final int j = i;
             new AsyncTask<String, Void, Bitmap>() {
@@ -57,12 +61,15 @@ public class MainFragment extends Fragment {
                 protected void onPostExecute(Bitmap result) {
                     bitmaps[j] = result;
                     if (bitmapsToDownload.decrementAndGet() == 0) {
-                        catGrid.setAdapter(new MyArrayAdapter(getContext(), bitmaps));
+                        showCatImages(bitmaps);
                     }
                 }
             }.execute(CAT_IMAGE_URL);
         }
-        return view;
+    }
+
+    private void showCatImages(Bitmap[] bitmaps) {
+        catGrid.setAdapter(new BitmapArrayAdapter(getContext(), bitmaps));
     }
 
     @Override

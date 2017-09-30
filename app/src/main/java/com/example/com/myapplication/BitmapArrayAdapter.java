@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-class MyArrayAdapter extends ArrayAdapter<Bitmap> {
-    MyArrayAdapter(Context context, Bitmap[] bitmaps) {
+class BitmapArrayAdapter extends ArrayAdapter<Bitmap> {
+    BitmapArrayAdapter(Context context, Bitmap[] bitmaps) {
         super(context, 0, bitmaps);
     }
 
@@ -19,7 +19,7 @@ class MyArrayAdapter extends ArrayAdapter<Bitmap> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_cat_image, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_image, parent, false);
         }
         final Bitmap bitmap = getItem(position);
         final ImageView imageView = (ImageView) convertView;
