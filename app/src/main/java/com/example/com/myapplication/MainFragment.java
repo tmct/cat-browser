@@ -36,6 +36,8 @@ public class MainFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_main, container, false);
         unbinder = ButterKnife.bind(this, view);
         downloadAndShowCatImages();
+        //TODO would get
+        new CatService().getCatApi();
         return view;
     }
 
